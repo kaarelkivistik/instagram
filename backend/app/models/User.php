@@ -25,4 +25,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	protected $guarded = array();
 
+	public function photos(){
+		return $this->hasMany('Photo');
+	}
+
 }

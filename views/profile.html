@@ -1,0 +1,10 @@
+<h3>{{ user.name }} <small>{{ user.username }}</small></h3>
+<hr>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-4 insta-image" ng-repeat="photo in user.photos"><img class="img-rounded img-responsive" ng-src="{{ baseUrl + '/media/' + photo.filename }}">
+        <div class="insta-overlay">bleh</div>
+        </div>
+    </div>
+</div>

@@ -39,7 +39,10 @@ class UserController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		return User::find($id);
+		$user = User::find($id);
+		$user->load('photos');
+		
+		return $user;
 	}
 
 	/**

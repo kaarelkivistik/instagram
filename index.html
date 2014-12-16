@@ -9,17 +9,19 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/flat-ui/dist/css/flat-ui.css" />
     <!-- endbower -->
-
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
     <div class="container">
         <h3 class="clearfix">
-	        Instagram
+	        <a ui-sref="home">Instagram</a>
 	        <small ng-show="$root.user"><b>{{ $root.user.username }}</b></small>
 
 	        <span class="pull-right">
 				<small ng-show="$root.user">		        	
+	            	<a class="btn btn-primary btn-xs" ui-sref="users"><span class="fui-list-large-thumbnails"></span> Users</a>
+	            	<a class="btn btn-primary btn-xs" ui-sref="profile({id: $root.user.id})"><span class="fui-user"></span> My profile</a>
 	            	<a class="btn btn-info btn-xs" ui-sref="upload"><span class="fui-image"></span> Upload photo</a>
 	            	<a class="btn btn-danger btn-xs" ui-sref="logout"><span class="fui-power"></span> Log out</a>
 		        </small>

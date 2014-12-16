@@ -1,0 +1,9 @@
+.insta-image {
+	position: relative;
+}
+
+.insta-overlay {
+	position: absolute;
+	margin-top: 50%;
+	transform: translateY(-50%);
+}

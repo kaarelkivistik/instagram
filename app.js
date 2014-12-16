@@ -13,6 +13,11 @@ angular.module('Instagram').config(function($stateProvider, $urlRouterProvider, 
             templateUrl: 'views/home.html',
             controller: 'HomeController'
         })
+        .state('profile', {
+            url: '/profile/:id',
+            templateUrl: 'views/profile.html',
+            controller: 'ProfileController'
+        })
         .state('signup', {
             url: '/signup',
             templateUrl: 'views/signup.html',
@@ -28,6 +33,11 @@ angular.module('Instagram').config(function($stateProvider, $urlRouterProvider, 
             templateUrl: 'views/logout.html',
             controller: 'LogoutController'
         })
+        .state('users', {
+            url: '/users',
+            templateUrl: 'views/users.html',
+            controller: 'UsersController'
+        })
         .state('upload', {
             url: '/upload',
             templateUrl: 'views/upload.html',
@@ -41,6 +51,8 @@ angular.module('Instagram').config(function($stateProvider, $urlRouterProvider, 
 });
 
 angular.module('Instagram').controller('AuthController', function($scope, $http) {
+    $scope.$root.baseUrl = baseUrl;
+
     $http({
         url: baseUrl + '/auth',
         method: 'GET'
@@ -55,6 +67,14 @@ angular.module('Instagram').controller('HomeController', function($scope, Restan
             $scope.photos = photos;
         })
     };
+
+    $scope.reload();
+});
+
+angular.module('Instagram').controller('ProfileController', function($scope, $state, Restangular) {
+    Restangular.all('users').get($state.params.id).then(function(user) {
+        $scope.user = user;
+    });
 });
 
 angular.module('Instagram').controller('SignupController', function($scope, $state, Restangular) {
@@ -93,9 +113,23 @@ angular.module('Instagram').controller('LogoutController', function($scope, $sta
     });
 });
 
+angular.module('Instagram').controller('UsersController', function($scope, $state, Restangular) {
+    Restangular.all('users').getList().then(function(users) {
+        $scope.users = users;
+    });
+});
+
 angular.module('Instagram').controller('UploadController', function($scope, $state, Restangular) {
-	$scope.hasFile = false;
     var allowedMimeTypes = ['image/png', 'image/jpeg', 'image/gif'];
+
+    $scope.hasFile = false;
+    $scope.photo = {};
+
+    $scope.upload = function() {
+        Restangular.all('photos').post($scope.photo).then(function(result) {
+            $state.go('home');
+        })
+    };
 
     function handleFileSelect(event) {
         var file;
@@ -112,12 +146,15 @@ angular.module('Instagram').controller('UploadController', function($scope, $sta
 
                 reader.onload = function(fileEvent) {
                     $('img#preview').attr('src', reader.result);
+
+                    $scope.photo.image = reader.result;
+                    $scope.$apply();
                 }
 
                 reader.readAsDataURL(file);
-            } 
+            }
         } else {
-        	$scope.hasFile = false;
+            $scope.hasFile = false;
         }
     }
 
@@ -125,5 +162,7 @@ angular.module('Instagram').controller('UploadController', function($scope, $sta
 });
 
 angular.module('Instagram').controller('PhotoController', function($scope, Restangular) {
-
+    Restangular.all('photos').get().then(function(photos) {
+        $scope.photos = photos;
+    })
 });
