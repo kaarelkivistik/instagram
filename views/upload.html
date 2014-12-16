@@ -1,1 +1,24 @@
-upload.html
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Tell something about the picture</label>
+                <input type="text" class="form-control">
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error': !fileIsAllowed && hasFile}">
+                <label>Choose a file</label>
+                <input type="file" class="form-control" id="file">
+                <small ng-show="!fileIsAllowed && hasFile">This file type is not supported :(</small>
+            </div>
+
+            <div class="form-group text-center">
+                <button class="btn btn-success btn-lg" ng-disabled="!fileIsAllowed || !hasFile">Upload it</button>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <img src="images/placeholder.png" class="img-rounded img-responsive" id="preview">
+        </div>
+    </div>
+</div>

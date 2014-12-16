@@ -62,7 +62,7 @@ angular.module('Instagram').controller('SignupController', function($scope, $sta
 
     $scope.signup = function() {
         users.post($scope.user).then(function(user) {
-        	$scope.$root.user = user;
+            $scope.$root.user = user;
             $state.go('home');
         });
     };
@@ -93,8 +93,35 @@ angular.module('Instagram').controller('LogoutController', function($scope, $sta
     });
 });
 
-angular.module('Instagram').controller('UploadController', function($scope, Restangular) {
+angular.module('Instagram').controller('UploadController', function($scope, $state, Restangular) {
+	$scope.hasFile = false;
+    var allowedMimeTypes = ['image/png', 'image/jpeg', 'image/gif'];
 
+    function handleFileSelect(event) {
+        var file;
+
+        if (event.target.files.length > 0) {
+            file = event.target.files[0];
+
+            $scope.fileIsAllowed = allowedMimeTypes.indexOf(file.type) > -1;
+            $scope.hasFile = true;
+            $scope.$apply();
+
+            if ($scope.fileIsAllowed) {
+                var reader = new FileReader();
+
+                reader.onload = function(fileEvent) {
+                    $('img#preview').attr('src', reader.result);
+                }
+
+                reader.readAsDataURL(file);
+            } 
+        } else {
+        	$scope.hasFile = false;
+        }
+    }
+
+    document.getElementById('file').addEventListener('change', handleFileSelect, false);
 });
 
 angular.module('Instagram').controller('PhotoController', function($scope, Restangular) {
