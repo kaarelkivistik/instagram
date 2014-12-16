@@ -9,20 +9,8 @@ class UserController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		return User::all();
 	}
-
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
 
 	/**
 	 * Store a newly created resource in storage.
@@ -31,7 +19,15 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$form = Input::all();
+		$form["password"] = Hash::make($form["password"]);
+
+		$user = new User($form);
+		$user->save();
+
+		Auth::loginUsingId($user->id);
+
+		return $user;
 	}
 
 
@@ -43,21 +39,8 @@ class UserController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		return User::find($id);
 	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
 
 	/**
 	 * Update the specified resource in storage.

@@ -1,21 +1,36 @@
 <!DOCTYPE html>
-<html ng-app="Instagram">
+<html ng-app="Instagram" ng-controller="AuthController">
 
 <head>
     <title>Instagram</title>
 
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/videojs/dist/video-js/video-js.css" />
-    <link rel="stylesheet" href="bower_components/flat-ui/dist/css/flat-ui.css" />
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/flat-ui/dist/css/flat-ui.css" />
     <!-- endbower -->
 
 </head>
 
 <body>
     <div class="container">
-        <h3>Instagram</h3>
+        <h3 class="clearfix">
+	        Instagram
+	        <small ng-show="$root.user"><b>{{ $root.user.username }}</b></small>
+
+	        <span class="pull-right">
+				<small ng-show="$root.user">		        	
+	            	<a class="btn btn-info btn-xs" ui-sref="upload"><span class="fui-image"></span> Upload photo</a>
+	            	<a class="btn btn-primary btn-xs" ui-sref="logout"><span class="fui-power"></span> Log out</a>
+		        </small>
+		        <small ng-hide="$root.user">
+		        	<a class="btn btn-primary btn-xs" ui-sref="signup"><span class="fui-user"></span> Sign up</a>
+	            	<a class="btn btn-primary btn-xs" ui-sref="login"><span class="fui-arrow-right"></span> Log in</a>
+	            </small>
+	        </span>
+        </h3>
         <hr>
+
         <div ui-view></div>
     </div>
 

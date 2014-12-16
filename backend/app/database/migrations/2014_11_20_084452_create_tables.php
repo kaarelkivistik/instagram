@@ -21,6 +21,9 @@ class CreateTables extends Migration {
 			$table->string("password");
 			$table->string("name");
 			$table->string("email");
+
+			$table->string("remember_token")->nullable();
+			$table->timestamps();
 		});
 
 		Schema::create("photos", function($table)
@@ -28,8 +31,11 @@ class CreateTables extends Migration {
 			$table->engine = "InnoDB";
 
 			$table->increments("id");
+			$table->string("title");
 			$table->integer("user_id")->unsigned();
 			$table->binary("data");
+
+			$table->timestamps();
 
 			$table->foreign("user_id")->references("id")->on("users");
 		});
@@ -43,6 +49,8 @@ class CreateTables extends Migration {
 			$table->integer("user_id")->unsigned();
 			$table->string("text");
 
+			$table->timestamps();
+
 			$table->foreign("user_id")->references("id")->on("users");
 			$table->foreign("picture_id")->references("id")->on("photos");
 		});
@@ -54,6 +62,8 @@ class CreateTables extends Migration {
 			$table->increments("id");
 			$table->integer("picture_id")->unsigned();
 			$table->integer("user_id")->unsigned();
+
+			$table->timestamps();
 
 			$table->foreign("user_id")->references("id")->on("users");
 			$table->foreign("picture_id")->references("id")->on("photos");
