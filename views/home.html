@@ -1,7 +1,16 @@
-<div class="form-group">
-    <div class="row">
-        <div class="col-sm-4 insta-image" ng-repeat="photo in photos"><img class="img-rounded img-responsive" ng-src="{{ baseUrl + '/media/' + photo.filename }}">
-        <div class="insta-overlay">bleh</div>
+<div class="text-center">
+    <div class="form-group text-center" ng-repeat="photo in photos">
+        <div style="display: inline-block; width: 400px">
+        	<a ui-sref="photo({id: photo.id})">
+            	<img class="img-rounded img-responsive" ng-src="{{ baseUrl + '/media/' + photo.filename }}">
+            </a>
+            <div class="clearfix" style="">
+            	<span class="pull-right" ng-show="$root.user"><button class="btn btn-warning btn-xs" ng-click="like(photo)"><span class="glyphicon glyphicon-thumbs-up"></span> like</button></span>
+            	<span class="pull-left"><b>{{ photo.user.username }}</b></span>
+            </div>
+            <div class="clearfix" style="">
+            	<span class="pull-left">{{ photo.likes.length + ' ' + (photo.likes.length == 1 ? 'like' : 'likes') }}</span>
+            </div>
         </div>
     </div>
 </div>

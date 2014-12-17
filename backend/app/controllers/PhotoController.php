@@ -9,7 +9,7 @@ class PhotoController extends \BaseController {
 	 */
 	public function index()
 	{
-		return Photo::all();
+		return Photo::with('user', 'likes')->get();
 	}
 
 	/**
@@ -75,7 +75,10 @@ class PhotoController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		return Photo::find($id);
+		$photo = Photo::find($id);
+		$photo->load('user', 'likes', 'comments.user');
+
+		return $photo;
 	}
 
 

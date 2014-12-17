@@ -44,21 +44,29 @@ angular.module('Instagram').config(function($stateProvider, $urlRouterProvider, 
             controller: 'UploadController'
         })
         .state('photo', {
-            url: '/photo',
+            url: '/photo/:id',
             templateUrl: 'views/photo.html',
             controller: 'PhotoController'
         })
 });
 
-angular.module('Instagram').controller('AuthController', function($scope, $http) {
+angular.module('Instagram').controller('AuthController', function($scope, $http, Restangular) {
     $scope.$root.baseUrl = baseUrl;
+
+    $scope.$root.like = function(photo) {
+        Restangular.all('likes').post({
+            photo_id: photo.id
+        }).then(function(like){
+            photo.likes.push({username: $scope.$root.user.username});
+        });
+    }
 
     $http({
         url: baseUrl + '/auth',
         method: 'GET'
     }).success(function(user) {
         $scope.$root.user = user;
-    })
+    });
 });
 
 angular.module('Instagram').controller('HomeController', function($scope, Restangular) {
@@ -161,8 +169,20 @@ angular.module('Instagram').controller('UploadController', function($scope, $sta
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
 });
 
-angular.module('Instagram').controller('PhotoController', function($scope, Restangular) {
-    Restangular.all('photos').get().then(function(photos) {
-        $scope.photos = photos;
-    })
+angular.module('Instagram').controller('PhotoController', function($scope, $state, Restangular) {
+    console.log($state.params);
+
+    Restangular.all('photos').get($state.params.id).then(function(photo) {
+        $scope.photo = photo;
+    });
+
+    $scope.submitComment = function(){
+        Restangular.all('comments').post({
+            photo_id: $state.params.id,
+            text: $scope.text
+        }).then(function(comment){
+            delete $scope.text;
+            $scope.photo.comments.push(comment);
+        });
+    }
 });

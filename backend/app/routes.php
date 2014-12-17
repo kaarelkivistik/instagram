@@ -34,3 +34,5 @@ Route::get('/logout', function()
 
 Route::resource('users', 'UserController');
 Route::resource('photos', 'PhotoController');
+Route::resource('likes', 'LikeController');
+Route::resource('comments', 'CommentController');

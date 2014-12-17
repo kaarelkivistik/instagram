@@ -45,14 +45,14 @@ class CreateTables extends Migration {
 			$table->engine = "InnoDB";
 
 			$table->increments("id");
-			$table->integer("picture_id")->unsigned();
+			$table->integer("photo_id")->unsigned();
 			$table->integer("user_id")->unsigned();
 			$table->string("text");
 
 			$table->timestamps();
 
 			$table->foreign("user_id")->references("id")->on("users");
-			$table->foreign("picture_id")->references("id")->on("photos");
+			$table->foreign("photo_id")->references("id")->on("photos");
 		});
 
 		Schema::create("likes", function($table)
@@ -60,13 +60,13 @@ class CreateTables extends Migration {
 			$table->engine = "InnoDB";
 
 			$table->increments("id");
-			$table->integer("picture_id")->unsigned();
+			$table->integer("photo_id")->unsigned();
 			$table->integer("user_id")->unsigned();
 
 			$table->timestamps();
 
 			$table->foreign("user_id")->references("id")->on("users");
-			$table->foreign("picture_id")->references("id")->on("photos");
+			$table->foreign("photo_id")->references("id")->on("photos");
 		});
 	}
 

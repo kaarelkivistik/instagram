@@ -31,7 +31,16 @@ class CommentController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		if(Auth::check()){
+			$comment = new Comment(array('user_id' => Auth::id(), 'photo_id' => Input::get('photo_id'), 'text' => Input::get('text')));
+			$comment->save();
+
+			$comment->load('user');
+
+			return $comment;
+		}
+		else
+			App::abort(403);
 	}
 
 

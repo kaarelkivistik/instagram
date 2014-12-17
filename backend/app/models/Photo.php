@@ -8,4 +8,12 @@ class Photo extends Eloquent {
 	public function user() {
 		return $this->belongsTo('User');
 	}
+
+	public function likes() {
+		return $this->belongsToMany('User', 'likes');
+	}
+
+	public function comments() {
+		return $this->hasMany('Comment');
+	}
 }
