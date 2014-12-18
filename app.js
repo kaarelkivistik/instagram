@@ -176,6 +176,12 @@ angular.module('Instagram').controller('PhotoController', function($scope, $stat
         $scope.photo = photo;
     });
 
+    $scope.deletePhoto = function(){
+        Restangular.all('photos').one($state.params.id).remove().then(function(){
+            $state.go('home');
+        });
+    };
+
     $scope.submitComment = function(){
         Restangular.all('comments').post({
             photo_id: $state.params.id,

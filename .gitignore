@@ -1,3 +1,4 @@
 backend/vendor
 bower_components
 node_modules
+backend/public/media

@@ -1,1 +1,3 @@
-users.html
+<div class="list-group">
+	<a ui-sref="profile({id: user.id})" class="list-group-item" ng-repeat="user in users"><h4>{{ user.username }} <small>{{ user.name }}</small></h4></a>
+</div>

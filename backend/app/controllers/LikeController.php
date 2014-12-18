@@ -33,10 +33,11 @@ class LikeController extends \BaseController {
 		if(Auth::check()){
 			$like = DB::table('likes')->where('photo_id', Input::get('photo_id'))->where('user_id', Auth::id())->first();
 
-			if(is_null($like))
+			if(is_null($like)){
 				DB::table('likes')->insert(
 				    array('photo_id' => Input::get('photo_id'), 'user_id' => Auth::id())
 				);
+			}
 		}
 		else
 			App::abort(403);

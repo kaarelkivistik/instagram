@@ -9,7 +9,7 @@ class PhotoController extends \BaseController {
 	 */
 	public function index()
 	{
-		return Photo::with('user', 'likes')->get();
+		return Photo::with('user', 'likes')->orderBy('updated_at', 'DESC')->get();
 	}
 
 	/**
@@ -93,10 +93,18 @@ class PhotoController extends \BaseController {
 		$user = Auth::user();
 		$photo = Photo::find($id);
 
-		if(!$user || $user->id !== $photo->user_id)
+		if(!$user || !$photo || $user->id !== $photo->user_id)
 			App::abort(403);
 
-		$photo->destroy();
+		DB::table('likes')->where('photo_id', $id)->delete();
+		DB::table('comments')->where('photo_id', $id)->delete();
+
+		$photo->delete();
+
+		$filepath = join(DIRECTORY_SEPARATOR, array(public_path(), 'media', $photo->filename));
+
+		if(file_exists($filepath))
+			unlink($filepath);
 	}
 
 

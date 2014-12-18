@@ -40,7 +40,17 @@ class UserController extends \BaseController {
 	public function show($id)
 	{
 		$user = User::find($id);
-		$user->load('photos');
+		// $user->load('photos.likes', 'photos.comments');
+		$user->load(array(
+			'photos' => function($q){
+				$q->orderBy('updated_at', 'DESC');
+			}, 
+			'photos.likes' => function($q){
+
+			}, 
+			'photos.comments' => function($q){
+
+			}));
 		
 		return $user;
 	}

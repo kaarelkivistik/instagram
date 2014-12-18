@@ -2,7 +2,7 @@
     <div class="form-group text-center" ng-repeat="photo in photos">
         <div style="display: inline-block; width: 400px">
         	<a ui-sref="photo({id: photo.id})">
-            	<img class="img-rounded img-responsive" ng-src="{{ baseUrl + '/media/' + photo.filename }}">
+            	<img class="img-rounded" style="width: 100%" ng-src="{{ baseUrl + '/media/' + photo.filename }}">
             </a>
             <div class="clearfix" style="">
             	<span class="pull-right" ng-show="$root.user"><button class="btn btn-warning btn-xs" ng-click="like(photo)"><span class="glyphicon glyphicon-thumbs-up"></span> like</button></span>

@@ -19,6 +19,9 @@
 	        <small ng-show="$root.user"><b>{{ $root.user.username }}</b></small>
 
 	        <span class="pull-right">
+                <small>                                        
+                    <a class="btn btn-primary btn-xs" ui-sref="home"><span class="fui-home"></span> Feed</a>
+                </small>
 				<small ng-show="$root.user">		        	
 	            	<a class="btn btn-primary btn-xs" ui-sref="users"><span class="fui-list-large-thumbnails"></span> Users</a>
 	            	<a class="btn btn-primary btn-xs" ui-sref="profile({id: $root.user.id})"><span class="fui-user"></span> My profile</a>
