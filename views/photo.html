@@ -4,8 +4,16 @@
             <img class="img-rounded" style="width: 100%" ng-src="{{ baseUrl + '/media/' + photo.filename }}">
         </div>
         <div class="col-md-8">
-            <h4>Comments <button class="btn btn-danger btn-xs pull-right" ng-show="$root.user.id == photo.user_id" ng-click="deletePhoto()"><span class="fui-trash"></span> Delete photo</button></h4>
-            <hr>
+            <h5>{{ photo.user.username }} <small>{{ photo.title }}</small>
+
+            <span class="pull-right">
+            <button class="btn btn-danger btn-xs" ng-show="$root.user.id == photo.user_id" ng-click="deletePhoto()"><span class="fui-trash"></span> Delete photo</button>
+            <button ng-show="$root.user" class="btn btn-warning btn-xs" ng-click="like(photo)"><span class="glyphicon glyphicon-thumbs-up"></span> like</button>
+            </span></h5>
+
+            <div class="form-group">
+                <span ng-repeat="like in photo.likes">{{ ($last ? ' and ' : ($first ? '' : ', ')) + like.username}}</span> like this.
+            </div>
 
             <div class="form-group" ng-repeat="comment in photo.comments">
                 <b>{{ comment.user.username }}</b> {{ comment.text }}
