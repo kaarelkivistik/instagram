@@ -12,7 +12,7 @@
             </span></h5>
 
             <div class="form-group">
-                <span ng-repeat="like in photo.likes">{{ ($last ? ' and ' : ($first ? '' : ', ')) + like.username}}</span> like this.
+                <span ng-repeat="like in photo.likes">{{ ($first && $last ? '' : ($last ? ' and ' : ($first ? '' : ', '))) + like.username }}</span> like{{ photo.likes.length == 1 ? 's' : '' }} this.
             </div>
 
             <div class="form-group" ng-repeat="comment in photo.comments">
